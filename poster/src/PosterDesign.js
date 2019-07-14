@@ -24,12 +24,33 @@ class PosterDesign extends React.Component {
 
     }
 
+    navToggle = () => {
+        const hamburgerNav = document.getElementById("hamburgerNav")
+
+        const menuIcon = hamburgerNav.children;
+        for (let i = 0; i < menuIcon.length; i++) {
+            menuIcon[i].classList.toggle("active");
+        }
+
+    }
+
     render() {
         return (
             <React.Fragment>
                 <div className="grid-container">
-                    <div className="border">One</div>
-                    <div className="border" id="promo-info-box">
+                    <div>
+                        <div id="hamburgerNav" onClick={() => this.navToggle()} style={{ marginLeft: "15px", marginTop: "15px" }}>
+                            <div className="line1"></div>
+                            <div className="line2"></div>
+                            <div className="line3"></div>
+                            {/* <ul>
+                                <li className="nav-list">About</li>
+                                <li className="nav-list">Contact</li>
+                                <li className="nav-list">Careers</li>
+                            </ul> */}
+                        </div>
+                    </div>
+                    <div id="promo-info-box">
                         <p id="promo-info-text">
                             50% off all canvas prints
                         </p>

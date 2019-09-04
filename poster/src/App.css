@@ -23,6 +23,11 @@
 
 #promo-info-box {
   background-color: rgb(240, 131, 81);
+  transition: all .5s;
+}
+
+#promo-info-box.active {
+  opacity: 0.0
 }
 
 #promo-info-text {
@@ -38,6 +43,7 @@
   margin-left: 3vw;
   margin-right: 3vw;
   box-shadow: 2px 5px 12px #888888;
+  background-size: 100% 100%;
 }
 
 #poster-sample-box.rotate {
@@ -112,7 +118,6 @@ hr {
   background-color:rgb(223, 110, 45);
   width:45px;
   height:8px;
-  /* opacity:1.0; */
   border-radius:12%;
   transition: all .5s;
 }
@@ -129,7 +134,7 @@ hr {
 .line3.active {
   transform: rotate(-45deg);
   position: fixed;
-  top: 7.25%;
+  top: 7%;
 }
 
 
@@ -142,10 +147,18 @@ hr {
   list-style-type: none;
   color:rgb(223, 110, 45);
   width: 30vw;
-  margin-right: 30vw;
-  /* padding-left: 11vw;
-  padding-right: 4vw; */
-  /* opacity:0.0; */
+  margin-right: 35vw;
+  transition: all .5s;
+  opacity: 0.0
+}
+
+.nav-list.active {
+  opacity: 1.0
+}
+
+.upload.active {
+  opacity: 0.0;
+  transition: all  .5s;
 }
   
 

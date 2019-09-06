@@ -7,7 +7,8 @@ class PosterDesign extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            newImg: false
+            newImg: false,
+            imgUrl: ''
         }
     }
 
@@ -31,45 +32,43 @@ class PosterDesign extends React.Component {
         PosterService.uploadImg(this.onUplaodSuccess, this.onUploadError)
     }
 
-    uploadNewImg = () => {
-        console.log("newImgAPI", this.state.newImg)
+    uploadNewImgHandler = () => {
         PosterService.uploadNewImg(this.onUplaodNewImgSuccess, this.onUploadNewImgError)
 
     }
 
-    // keep uploading new image, disable poster box elements fading back
+    //disable poster box elements from fading back in
     onUplaodSuccess = resp => {
-        console.log(this.state.newImg)
-        const imgUrl = resp.config.url
-
-        if (this.posterBox.style.backgroundImage === '') {
-            for (let i = 0; i < this.uploadImage.length; i++) {
-                this.uploadImage[i].classList.toggle("active");
-            }
-            this.posterBox.style.backgroundImage = `url(${imgUrl})`
-        }
         //set state for ternary clickhandler to switch to new handler call
         this.setState({
-            newImg: true
+            newImg: true,
+            imgUrl: resp.config.url
+        }, () => {
+            if (this.posterBox.style.backgroundImage === '') {
+                for (let i = 0; i < this.uploadImage.length; i++) {
+                    this.uploadImage[i].classList.toggle("active");
+                }
+                this.posterBox.style.backgroundImage = `url(${this.state.imgUrl})`
+            }
         })
+
     }
 
     onUplaodNewImgSuccess = resp => {
-        let newImg = resp.config.url
-
         if (this.state.newImg) {
+            //reset background img to emtpy string,
+            //set state and use recurrisve call to go to else statement to upload new Img 
             this.posterBox.style.backgroundImage = ''
-            //recurrsive call to itself to upload new img
             this.setState({
                 newImg: false
             }, () => this.onUplaodNewImgSuccess(resp))
-            console.log("If")
-
         } else {
-            console.log("Else")
-            this.posterBox.style.backgroundImage = `url(${newImg})`
-
-
+            //set state so that default of onclick will always go back to function uploadNewImg 
+            this.setState({
+                newImg: true,
+                imgUrl: resp.config.url
+            })
+            this.posterBox.style.backgroundImage = `url(${this.state.imgUrl})`
         }
     }
 
@@ -141,7 +140,7 @@ class PosterDesign extends React.Component {
                         <hr width="99%" style={{ marginTop: "20px" }} />
                         <span id="bottom-row">
                             <p id="price-value">$17.99</p>
-                            <button id="upload-button" onClick={!this.state.newImg ? this.uploadHandler : this.uploadNewImg}>UPLOAD</button>
+                            <button id="upload-button" onClick={!this.state.newImg ? this.uploadHandler : this.uploadNewImgHandler}>UPLOAD</button>
                         </span>
                     </div>
                     <div>
